@@ -1,7 +1,7 @@
 CC := clang
 CFLAGS := -Wall -Wextra -Werror -I./include
 SRC_DIR := src
-SRC_FILES := main.c
+SRC_FILES := main.c client.c
 OUT_DIR := build
 TARGET := $(OUT_DIR)/C_HTTP
 
