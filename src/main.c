@@ -4,33 +4,54 @@
 #include <netdb.h>
 #include <string.h>
 #include <arpa/inet.h>
+#include <errno.h>
 
 static const char* PORT_NUMBER = "8080";
 
-int m_connect();
+int m_get_connect_addrs(struct addrinfo** addresses);
+int m_display_addrs(const struct addrinfo* addresses);
 
 int main() {
-  m_connect();
+  struct addrinfo *connect_addrs;
+  int result = m_get_connect_addrs(&connect_addrs);
+  if (result != 0) {
+    return result;
+  }
+  result = m_display_addrs(connect_addrs);
+  if (result != 0) {
+    return result;
+  }
+
+  // For Now we are just connecting to the first address returned, no need to search the linked list
+  result = socket(connect_addrs->ai_family, connect_addrs->ai_socktype, 0);
+  if (result == -1) {
+    printf("Unable to create a socket for provided address, error: %d\n", errno);
+    return result;
+  }
+  printf("Created a connection to localhost\n");
+  
+  freeaddrinfo(connect_addrs);
+  
   return 0;
 }
 
-int m_connect() {
-  struct addrinfo *addresses;
-  
+int m_get_connect_addrs(struct addrinfo** addresses) {
   struct addrinfo hints;
   memset(&hints, 0, sizeof(hints));
-  hints.ai_family = AF_UNSPEC;
+  hints.ai_family = AF_INET;
   hints.ai_socktype = SOCK_STREAM;
   hints.ai_flags = AI_PASSIVE;
 
-  int result = getaddrinfo(NULL, PORT_NUMBER, &hints, &addresses);
+  int result = getaddrinfo(NULL, PORT_NUMBER, &hints, addresses);
   if (result != 0) {
     printf("[ERROR] Unable to retrieve address info with port: %s\n, error: %s\n", PORT_NUMBER, gai_strerror(result));
     return result;
   }
-  printf("Successfully retrieved address information\n");
+  return 0;
+}
 
-  struct addrinfo *current = addresses;
+int m_display_addrs(const struct addrinfo* addresses) {
+  const struct addrinfo *current = addresses;
   char addr_str[INET6_ADDRSTRLEN];
   void *addr;
   while (current != NULL) {
@@ -50,7 +71,5 @@ int m_connect() {
     
     current = current->ai_next;
   }
-
-  freeaddrinfo(addresses);
   return 0;
 }
