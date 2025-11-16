@@ -10,11 +10,11 @@
       "-I./lib/include",
       "-c",
       "-o",
-      "build/server.o",
-      "lib/src/server.c"
+      "build/main.o",
+      "sandbox/src/main.c"
     ],
     "directory": "/home/michael/Documents/Programming/C/C_HTTP",
-    "file": "/home/michael/Documents/Programming/C/C_HTTP/lib/src/server.c",
-    "output": "/home/michael/Documents/Programming/C/C_HTTP/build/server.o"
+    "file": "/home/michael/Documents/Programming/C/C_HTTP/sandbox/src/main.c",
+    "output": "/home/michael/Documents/Programming/C/C_HTTP/build/main.o"
   }
 ]
