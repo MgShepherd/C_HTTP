@@ -1,5 +1,5 @@
 CC := gcc
-CFLAGS := -std=c23 -Wpedantic -Wall -Wextra -Werror
+CFLAGS := -std=gnu23 -Wpedantic -Wall -Wextra -Werror
 OUT_FOLDER := build
 
 SANDBOX_NAME := $(OUT_FOLDER)/Sandbox

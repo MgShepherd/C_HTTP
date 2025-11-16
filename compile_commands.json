@@ -1,0 +1,20 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-std=gnu23",
+      "-Wpedantic",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I./lib/include",
+      "-c",
+      "-o",
+      "build/server.o",
+      "lib/src/server.c"
+    ],
+    "directory": "/home/michael/Documents/Programming/C/C_HTTP",
+    "file": "/home/michael/Documents/Programming/C/C_HTTP/lib/src/server.c",
+    "output": "/home/michael/Documents/Programming/C/C_HTTP/build/server.o"
+  }
+]
