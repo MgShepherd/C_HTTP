@@ -1,6 +1,9 @@
 #include <server.h>
 
 int main() {
-  h_server_start();
+  Server server = {0};
+  h_server_start(&server);
+
+  h_server_stop(&server);
   return 0;
 }

@@ -3,6 +3,11 @@
 
 typedef enum { S_SUCCESS, S_FAILED_TO_START } ServerStatus;
 
-ServerStatus h_server_start();
+typedef struct {
+  int sock_fd;
+} Server;
+
+ServerStatus h_server_start(Server *server);
+void h_server_stop(Server *server);
 
 #endif // _SERVER_H_
