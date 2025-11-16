@@ -7,7 +7,7 @@
 
 const char *PORT_NUMBER = "8080";
 
-ServerStatus server_start() {
+ServerStatus h_server_start() {
   printf("This is the server starting\n");
 
   struct addrinfo hints = {0};

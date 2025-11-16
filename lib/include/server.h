@@ -3,6 +3,6 @@
 
 typedef enum { S_SUCCESS, S_FAILED_TO_START } ServerStatus;
 
-ServerStatus server_start();
+ServerStatus h_server_start();
 
 #endif // _SERVER_H_
