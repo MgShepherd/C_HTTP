@@ -10,7 +10,7 @@ SANDBOX_O_FILES := $(patsubst $(SANDBOX_SRC_FOLDER)%.c, $(OUT_FOLDER)/%.o, $(SAN
 LIB_NAME := http
 LIB_PATH := $(OUT_FOLDER)/lib$(LIB_NAME).a
 LIB_SRC_FOLDER := lib/src/
-LIB_C_FILES := $(addprefix $(LIB_SRC_FOLDER), server.c client.c)
+LIB_C_FILES := $(addprefix $(LIB_SRC_FOLDER), server.c client.c utils.c constants.c)
 LIB_O_FILES := $(patsubst $(LIB_SRC_FOLDER)%.c, $(OUT_FOLDER)/%.o, $(LIB_C_FILES))
 
 all: $(LIB_PATH) $(SANDBOX_NAME)

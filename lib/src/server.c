@@ -7,26 +7,16 @@
 #include <unistd.h>
 
 #include "server.h"
-
-const char *PORT_NUMBER = "8080";
-const int BACKLOG_SIZE = 10;
+#include "utils.h"
+#include "constants.h"
 
 int bind_to_socket(const struct addrinfo *con_info);
 int accept_connections(int sock_fd);
 
 H_Status h_server_start(H_Server *server) {
-  struct addrinfo hints = {0};
   struct addrinfo *con_info;
-
-  hints.ai_socktype = SOCK_STREAM;
-  hints.ai_flags = AI_PASSIVE;
-
-  int status = getaddrinfo(NULL, PORT_NUMBER, &hints, &con_info);
-  if (status != 0) {
-    fprintf(stderr, "[ERROR] Unable to retrieve address information: %s\n",
-            gai_strerror(status));
-    return H_SERVER_FAILED_TO_START;
-  }
+	H_Status result = h_fill_connection_info(&con_info);
+	if(result != H_SUCCESS) return result;
 
   server->sock_fd = bind_to_socket(con_info);
   if (server->sock_fd == -1) {
@@ -41,7 +31,7 @@ H_Status h_server_start(H_Server *server) {
     h_server_stop(server);
     return H_SERVER_FAILED_TO_START;
   }
-  return H_SUCCESS;
+  return result;
 }
 
 void h_server_stop(H_Server *server) {
