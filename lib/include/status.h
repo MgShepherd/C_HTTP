@@ -1,0 +1,6 @@
+#ifndef _STATUS_H_
+#define _STATUS_H_
+
+typedef enum { H_SUCCESS, H_SERVER_FAILED_TO_START, H_CLIENT_FAILED_TO_CONNECT } H_Status;
+
+#endif // !_STATUS_H_

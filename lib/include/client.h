@@ -1,8 +1,8 @@
 #ifndef _CLIENT_H
 #define _CLIENT_H
 
-typedef enum { C_SUCCESS, C_FAILED_TO_CONNECT } ClientStatus;
+#include "status.h"
 
-ClientStatus h_connect_to_server();
+H_Status h_connect_to_server();
 
 #endif // !_CLIENT_H

@@ -14,7 +14,7 @@ const int BACKLOG_SIZE = 10;
 int bind_to_socket(const struct addrinfo *con_info);
 int accept_connections(int sock_fd);
 
-ServerStatus h_server_start(Server *server) {
+H_Status h_server_start(H_Server *server) {
   struct addrinfo hints = {0};
   struct addrinfo *con_info;
 
@@ -25,13 +25,13 @@ ServerStatus h_server_start(Server *server) {
   if (status != 0) {
     fprintf(stderr, "[ERROR] Unable to retrieve address information: %s\n",
             gai_strerror(status));
-    return S_FAILED_TO_START;
+    return H_SERVER_FAILED_TO_START;
   }
 
   server->sock_fd = bind_to_socket(con_info);
   if (server->sock_fd == -1) {
     h_server_stop(server);
-    return S_FAILED_TO_START;
+    return H_SERVER_FAILED_TO_START;
   }
 
   freeaddrinfo(con_info);
@@ -39,12 +39,12 @@ ServerStatus h_server_start(Server *server) {
 
   if (accept_connections(server->sock_fd) != 0) {
     h_server_stop(server);
-    return S_FAILED_TO_START;
+    return H_SERVER_FAILED_TO_START;
   }
-  return S_SUCCESS;
+  return H_SUCCESS;
 }
 
-void h_server_stop(Server *server) {
+void h_server_stop(H_Server *server) {
   if (server->sock_fd == -1)
     return;
 

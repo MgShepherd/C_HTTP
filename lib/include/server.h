@@ -1,13 +1,13 @@
 #ifndef _SERVER_H_
 #define _SERVER_H_
 
-typedef enum { S_SUCCESS, S_FAILED_TO_START } ServerStatus;
+#include "status.h"
 
 typedef struct {
   int sock_fd;
-} Server;
+} H_Server;
 
-ServerStatus h_server_start(Server *server);
-void h_server_stop(Server *server);
+H_Status h_server_start(H_Server *server);
+void h_server_stop(H_Server *server);
 
 #endif // _SERVER_H_

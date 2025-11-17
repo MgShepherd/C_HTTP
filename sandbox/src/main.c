@@ -2,7 +2,7 @@
 #include <server.h>
 
 int main() {
-  Server server = {0};
+  H_Server server = {0};
   h_connect_to_server();
   h_server_start(&server);
 
