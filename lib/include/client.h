@@ -3,6 +3,6 @@
 
 #include "status.h"
 
-H_Status h_connect_to_server();
+H_Status h_client_connect();
 
 #endif // !_CLIENT_H

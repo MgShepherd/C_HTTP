@@ -4,7 +4,7 @@ OUT_FOLDER := build
 
 SANDBOX_NAME := $(OUT_FOLDER)/Sandbox
 SANDBOX_SRC_FOLDER := sandbox/src/
-SANDBOX_C_FILES := $(addprefix $(SANDBOX_SRC_FOLDER), main.c)
+SANDBOX_C_FILES := $(addprefix $(SANDBOX_SRC_FOLDER), main.c argparse.c)
 SANDBOX_O_FILES := $(patsubst $(SANDBOX_SRC_FOLDER)%.c, $(OUT_FOLDER)/%.o, $(SANDBOX_C_FILES))
 
 LIB_NAME := http
@@ -22,7 +22,7 @@ $(OUT_FOLDER)/%.o: $(LIB_SRC_FOLDER)%.c | $(OUT_FOLDER)
 	$(CC) $(CFLAGS) -I./lib/include -c -o $@ $<
 
 $(OUT_FOLDER)/%.o: $(SANDBOX_SRC_FOLDER)%.c | $(OUT_FOLDER)
-	$(CC) $(CFLAGS) -I./lib/include -c -o $@ $<
+	$(CC) $(CFLAGS) -I./lib/include -I./sandbox/include -c -o $@ $<
 
 $(SANDBOX_NAME): $(SANDBOX_O_FILES) $(LIB_PATH)
 	$(CC) -o $(SANDBOX_NAME) $(SANDBOX_O_FILES) -L./$(OUT_FOLDER) -l$(LIB_NAME) 
