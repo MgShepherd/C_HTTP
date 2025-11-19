@@ -6,9 +6,9 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#include "common.h"
 #include "constants.h"
 #include "server.h"
-#include "utils.h"
 
 int bind_to_socket(const struct addrinfo *con_info);
 int accept_connections(int sock_fd);
@@ -20,11 +20,11 @@ H_Status h_server_start(H_Socket *server) {
     return result;
 
   server->sock_fd = bind_to_socket(con_info);
+  freeaddrinfo(con_info);
   if (server->sock_fd == -1) {
     return H_SERVER_FAILED_TO_START;
   }
 
-  freeaddrinfo(con_info);
   printf("Local Server started on port %s...\n", PORT_NUMBER);
 
   if (accept_connections(server->sock_fd) != 0) {
@@ -35,24 +35,13 @@ H_Status h_server_start(H_Socket *server) {
 }
 
 int bind_to_socket(const struct addrinfo *con_info) {
-  const struct addrinfo *current;
-  int sock_fd = -1;
-  for (current = con_info; current != NULL; current = current->ai_next) {
-    sock_fd =
-        socket(current->ai_family, current->ai_socktype, current->ai_protocol);
-    if (sock_fd != -1)
-      break;
-  }
-
+  const struct addrinfo *conn_addr = NULL;
+  int sock_fd = find_valid_socket(con_info, &conn_addr);
   if (sock_fd == -1) {
-    fprintf(stderr,
-            "[ERROR] Unable to open socket, last attempt to open socket failed "
-            "with error: %s\n",
-            strerror(errno));
     return sock_fd;
   }
 
-  int result = bind(sock_fd, current->ai_addr, current->ai_addrlen);
+  int result = bind(sock_fd, conn_addr->ai_addr, conn_addr->ai_addrlen);
   if (result == -1) {
     fprintf(stderr,
             "[ERROR] Unable to bind created socket to address, error: %s\n",

@@ -10,11 +10,85 @@
       "-I./lib/include",
       "-c",
       "-o",
+      "build/server.o",
+      "lib/src/server.c"
+    ],
+    "directory": "/home/michael/Documents/Programming/C/C_HTTP",
+    "file": "/home/michael/Documents/Programming/C/C_HTTP/lib/src/server.c",
+    "output": "/home/michael/Documents/Programming/C/C_HTTP/build/server.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-std=gnu23",
+      "-Wpedantic",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I./lib/include",
+      "-c",
+      "-o",
       "build/client.o",
       "lib/src/client.c"
     ],
     "directory": "/home/michael/Documents/Programming/C/C_HTTP",
     "file": "/home/michael/Documents/Programming/C/C_HTTP/lib/src/client.c",
     "output": "/home/michael/Documents/Programming/C/C_HTTP/build/client.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-std=gnu23",
+      "-Wpedantic",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I./lib/include",
+      "-c",
+      "-o",
+      "build/common.o",
+      "lib/src/common.c"
+    ],
+    "directory": "/home/michael/Documents/Programming/C/C_HTTP",
+    "file": "/home/michael/Documents/Programming/C/C_HTTP/lib/src/common.c",
+    "output": "/home/michael/Documents/Programming/C/C_HTTP/build/common.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-std=gnu23",
+      "-Wpedantic",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I./lib/include",
+      "-I./sandbox/include",
+      "-c",
+      "-o",
+      "build/main.o",
+      "sandbox/src/main.c"
+    ],
+    "directory": "/home/michael/Documents/Programming/C/C_HTTP",
+    "file": "/home/michael/Documents/Programming/C/C_HTTP/sandbox/src/main.c",
+    "output": "/home/michael/Documents/Programming/C/C_HTTP/build/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-std=gnu23",
+      "-Wpedantic",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-I./lib/include",
+      "-I./sandbox/include",
+      "-c",
+      "-o",
+      "build/argparse.o",
+      "sandbox/src/argparse.c"
+    ],
+    "directory": "/home/michael/Documents/Programming/C/C_HTTP",
+    "file": "/home/michael/Documents/Programming/C/C_HTTP/sandbox/src/argparse.c",
+    "output": "/home/michael/Documents/Programming/C/C_HTTP/build/argparse.o"
   }
 ]

@@ -1,8 +1,8 @@
 #ifndef _SERVER_H_
 #define _SERVER_H_
 
+#include "common.h"
 #include "status.h"
-#include "utils.h"
 
 H_Status h_server_start(H_Socket *server);
 

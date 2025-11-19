@@ -2,7 +2,7 @@
 #include <server.h>
 
 #include "argparse.h"
-#include "utils.h"
+#include "common.h"
 
 int main(int argc, char **argv) {
   CmdArgs args = parse_cmd_args(argc, argv);
