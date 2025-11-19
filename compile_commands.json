@@ -8,14 +8,13 @@
       "-Wextra",
       "-Werror",
       "-I./lib/include",
-      "-I./sandbox/include",
       "-c",
       "-o",
-      "build/argparse.o",
-      "sandbox/src/argparse.c"
+      "build/client.o",
+      "lib/src/client.c"
     ],
     "directory": "/home/michael/Documents/Programming/C/C_HTTP",
-    "file": "/home/michael/Documents/Programming/C/C_HTTP/sandbox/src/argparse.c",
-    "output": "/home/michael/Documents/Programming/C/C_HTTP/build/argparse.o"
+    "file": "/home/michael/Documents/Programming/C/C_HTTP/lib/src/client.c",
+    "output": "/home/michael/Documents/Programming/C/C_HTTP/build/client.o"
   }
 ]

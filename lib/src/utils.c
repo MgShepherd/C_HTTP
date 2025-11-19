@@ -1,7 +1,9 @@
 #include "utils.h"
 
-#include <stddef.h>
+#include <errno.h>
 #include <stdio.h>
+#include <string.h>
+#include <unistd.h>
 
 #include "constants.h"
 
@@ -19,4 +21,17 @@ H_Status h_fill_connection_info(struct addrinfo **connect_addr) {
   }
 
   return H_SUCCESS;
+}
+
+void h_socket_close(H_Socket *server) {
+  if (server->sock_fd == -1)
+    return;
+
+  int result = close(server->sock_fd);
+  if (result == -1) {
+    fprintf(stderr,
+            "[ERROR] Unable to close socket file descriptor, error: %s\n",
+            strerror(errno));
+  }
+  server->sock_fd = -1;
 }

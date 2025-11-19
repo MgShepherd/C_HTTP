@@ -6,21 +6,21 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#include "constants.h"
 #include "server.h"
 #include "utils.h"
-#include "constants.h"
 
 int bind_to_socket(const struct addrinfo *con_info);
 int accept_connections(int sock_fd);
 
-H_Status h_server_start(H_Server *server) {
+H_Status h_server_start(H_Socket *server) {
   struct addrinfo *con_info;
-	H_Status result = h_fill_connection_info(&con_info);
-	if(result != H_SUCCESS) return result;
+  H_Status result = h_fill_connection_info(&con_info);
+  if (result != H_SUCCESS)
+    return result;
 
   server->sock_fd = bind_to_socket(con_info);
   if (server->sock_fd == -1) {
-    h_server_stop(server);
     return H_SERVER_FAILED_TO_START;
   }
 
@@ -28,23 +28,10 @@ H_Status h_server_start(H_Server *server) {
   printf("Local Server started on port %s...\n", PORT_NUMBER);
 
   if (accept_connections(server->sock_fd) != 0) {
-    h_server_stop(server);
+    h_socket_close(server);
     return H_SERVER_FAILED_TO_START;
   }
   return result;
-}
-
-void h_server_stop(H_Server *server) {
-  if (server->sock_fd == -1)
-    return;
-
-  int result = close(server->sock_fd);
-  if (result == -1) {
-    fprintf(stderr,
-            "[ERROR] Unable to close socket file descriptor, error: %s\n",
-            strerror(errno));
-  }
-  server->sock_fd = -1;
 }
 
 int bind_to_socket(const struct addrinfo *con_info) {
