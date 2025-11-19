@@ -11,7 +11,8 @@
 #include "server.h"
 
 int bind_to_socket(const struct addrinfo *con_info);
-int accept_connections(int sock_fd);
+int accept_connection(int sock_fd);
+H_Status send_msg_to_client(int conn_fd);
 
 H_Status h_server_start(H_Socket *server) {
   struct addrinfo *con_info;
@@ -27,11 +28,13 @@ H_Status h_server_start(H_Socket *server) {
 
   printf("Local Server started on port %s...\n", PORT_NUMBER);
 
-  if (accept_connections(server->sock_fd) != 0) {
+  const int conn_fd = accept_connection(server->sock_fd);
+  if (conn_fd == -1) {
     h_socket_close(server);
     return H_SERVER_FAILED_TO_START;
   }
-  return result;
+
+  return send_msg_to_client(conn_fd);
 }
 
 int bind_to_socket(const struct addrinfo *con_info) {
@@ -51,7 +54,7 @@ int bind_to_socket(const struct addrinfo *con_info) {
   return sock_fd;
 }
 
-int accept_connections(int sock_fd) {
+int accept_connection(int sock_fd) {
   int result = listen(sock_fd, BACKLOG_SIZE);
   if (result == -1) {
     fprintf(
@@ -70,5 +73,27 @@ int accept_connections(int sock_fd) {
             strerror(errno));
   }
   printf("Accepted connection and assigned fd %d\n", conn_fd);
-  return 0;
+  return conn_fd;
+}
+
+H_Status send_msg_to_client(int conn_fd) {
+  static const char *MSG = "Hello from the server\n";
+  const size_t msg_len = strlen(MSG);
+  int bytes_sent = send(conn_fd, MSG, msg_len, 0);
+
+  if (bytes_sent == -1) {
+    fprintf(stderr, "[ERROR] Failed to send message to client, error: %s\n",
+            strerror(errno));
+    return H_FAILED_TO_SEND;
+  } else if ((unsigned long)bytes_sent < msg_len) {
+    fprintf(stderr,
+            "[ERROR] Not all data was sent successfully, expected %zu but only "
+            "%d sent",
+            msg_len, bytes_sent);
+    return H_FAILED_TO_SEND;
+  }
+
+  printf("Message successfully sent from server, number of bytes were: %d\n",
+         bytes_sent);
+  return H_SUCCESS;
 }
